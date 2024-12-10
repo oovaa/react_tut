@@ -1,11 +1,13 @@
-import ListGroup from "./components/listGroup"
+import { Button } from "./components/Button"
+import Alert from "./components/Alert"
+import { useState } from "react"
 
 export default function App() {
-  const items = ["New York", "Los Angeles", "Washington D.C.", "Philadelphia"]
-
+  const [visibale, setVisibleity] = useState(false)
   return (
     <div>
-      <ListGroup items={items} heading='Listii' />
+      {visibale && <Alert onClose={() => setVisibleity(false)}>hi thre</Alert>}
+      <Button onClick={() => setVisibleity(true)}>my button</Button>
     </div>
   )
 }
