@@ -1,16 +1,18 @@
 import "./App.css";
+import linux from "./components/gnu-linux.png";
 
 import React from "react";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Main from "./components/Main";
+
+const Logo = (props) => {
+  const userPic = <img src={linux}></img>;
+  return userPic;
+};
 
 function App() {
   return (
     <div>
-      <Header />
-      <Main content="omar" />
-      <Footer />
+      <h1>Hello World</h1>
+      <Logo />
     </div>
   );
 }
