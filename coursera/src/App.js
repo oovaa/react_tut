@@ -1,18 +1,20 @@
+import { useState } from "react";
 import "./App.css";
-import linux from "./components/gnu-linux.png";
-
-import React from "react";
-
-const Logo = (props) => {
-  const userPic = <img src={linux}></img>;
-  return userPic;
-};
+import Login from './components/Login'
+import { LoginContext } from "./Context/LoginContext";
+import Profile from "./components/Profile";
 
 function App() {
+  const [showProfile, setShowProfile] = useState(false);
+  const [username, setUsername] = useState("");
+
+
+
   return (
     <div>
-      <h1>Hello World</h1>
-      <Logo />
+      <LoginContext.Provider value={{ username, setUsername, setShowProfile }}>
+        {showProfile ? <Profile /> : <Login />}
+      </LoginContext.Provider>
     </div>
   );
 }
