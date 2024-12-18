@@ -122,7 +122,7 @@ function evaluate(current, previous, op) {
       result = prev - cur;
       break;
     case "÷":
-      result = cur / prev;
+      result = prev / cur;
       break;
     default:
       return "";
