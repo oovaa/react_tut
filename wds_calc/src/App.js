@@ -14,6 +14,14 @@ export const ACTIONS = {
 const reducer = (state, { type, payload }) => {
   switch (type) {
     case ACTIONS.ADD_DIGIT:
+      if (state.override) {
+        return {
+          ...state,
+          cur: payload.digit,
+          override: false,
+        };
+      }
+
       if (payload.digit === "0" && state.cur === "0") return state;
 
       if (payload.digit === "." && (state.cur || "").includes("."))
@@ -47,12 +55,14 @@ const reducer = (state, { type, payload }) => {
     case ACTIONS.CLEAR:
       return {};
     case ACTIONS.EVALUATE:
-      if (state.cur == null || state.prev == null) return state;
+      if (state.cur == null || state.prev == null || state.op == null)
+        return state;
       return {
         ...state,
         cur: evaluate(state.cur, state.prev, state.op),
         prev: null,
         op: null,
+        override: true,
       };
 
     default:
