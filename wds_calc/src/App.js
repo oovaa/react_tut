@@ -11,6 +11,18 @@ export const ACTIONS = {
   EVALUATE: "evaluate",
 };
 
+const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
+  maximumFractionDigits: 0,
+});
+
+function formatOperand(operand) {
+  if (operand == null) return;
+
+  const [integer, decimal] = operand.split(".");
+  if (decimal == null) return INTEGER_FORMATTER.format(integer);
+  return `${INTEGER_FORMATTER.format(integer)}.${decimal}`;
+}
+
 const reducer = (state, { type, payload }) => {
   switch (type) {
     case ACTIONS.ADD_DIGIT:
@@ -65,6 +77,27 @@ const reducer = (state, { type, payload }) => {
         override: true,
       };
 
+    case ACTIONS.DELETE:
+      if (state.override)
+        return {
+          ...state,
+          cur: null,
+          override: false,
+        };
+
+      if (state.cur == null) return state;
+
+      if (state.cur.length === 1)
+        return {
+          ...state,
+          cur: null,
+        };
+
+      return {
+        ...state,
+        cur: state.cur.slice(0, -1),
+      };
+
     default:
       break;
   }
@@ -104,10 +137,10 @@ function App() {
     <div className="calculator-gird">
       <div className="output">
         <div className="prev-operand">
-          {prev}
+          {formatOperand(prev)}
           {op}
         </div>
-        <div className="cur-operand">{cur} </div>
+        <div className="cur-operand">{formatOperand(cur)} </div>
       </div>
       <button
         className="span-two"
