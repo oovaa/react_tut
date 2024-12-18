@@ -1,6 +1,9 @@
 import React, { useReducer } from 'react'
 import './App.css';
 import DigitbButton from './DigitbButton'
+import OperationButtton from './OperationButtton';
+
+
 export const ACTIONS = {
   ADD_DIGIT: "add-digit",
   CHOOSE_OP: "choose-op",
@@ -12,6 +15,12 @@ export const ACTIONS = {
 const reducer = (state, { type, payload }) => {
   switch (type) {
     case ACTIONS.ADD_DIGIT:
+      if (payload.digit === '0' && state.cur === '0')
+        return state
+
+      if (payload.digit === '.' && (state.cur || "").includes('.'))
+        return state
+
       return {
         ...state,
         cur: `${state.cur || ""}${payload.digit}`
@@ -35,19 +44,19 @@ function App() {
       </div>
       <button className='span-two'>AC</button>
       <button>DEL</button>
-      <DigitbButton digit="÷" dispatch={dispatch} />
+      <OperationButtton Operation="÷" dispatch={dispatch} />
       <DigitbButton digit="1" dispatch={dispatch} />
       <DigitbButton digit="2" dispatch={dispatch} />
       <DigitbButton digit="3" dispatch={dispatch} />
-      <DigitbButton digit="*" dispatch={dispatch} />
+      <OperationButtton Operation="*" dispatch={dispatch} />
       <DigitbButton digit="4" dispatch={dispatch} />
       <DigitbButton digit="5" dispatch={dispatch} />
       <DigitbButton digit="6" dispatch={dispatch} />
-      <DigitbButton digit="+" dispatch={dispatch} />
+      <OperationButtton Operation="+" dispatch={dispatch} />
       <DigitbButton digit="7" dispatch={dispatch} />
       <DigitbButton digit="8" dispatch={dispatch} />
       <DigitbButton digit="9" dispatch={dispatch} />
-      <DigitbButton digit="-" dispatch={dispatch} />
+      <OperationButtton Operation="-" dispatch={dispatch} />
       <DigitbButton digit="." dispatch={dispatch} />
       <DigitbButton digit="0" dispatch={dispatch} />
       <button className='span-two'>=</button>
