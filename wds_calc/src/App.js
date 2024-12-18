@@ -46,7 +46,14 @@ const reducer = (state, { type, payload }) => {
 
     case ACTIONS.CLEAR:
       return {};
-    case ACTIONS.DELETE:
+    case ACTIONS.EVALUATE:
+      if (state.cur == null || state.prev == null) return state;
+      return {
+        ...state,
+        cur: evaluate(state.cur, state.prev, state.op),
+        prev: null,
+        op: null,
+      };
 
     default:
       break;
@@ -114,7 +121,12 @@ function App() {
       <OperationButtton Operation="-" dispatch={dispatch} />
       <DigitbButton digit="." dispatch={dispatch} />
       <DigitbButton digit="0" dispatch={dispatch} />
-      <button className="span-two">=</button>
+      <button
+        className="span-two"
+        onClick={() => dispatch({ type: ACTIONS.EVALUATE })}
+      >
+        =
+      </button>
     </div>
   );
 }
