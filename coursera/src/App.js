@@ -1,67 +1,45 @@
-import { useState, useRef } from "react";
-import "./App.css";
-
+import React, { useState } from 'react'
 function App() {
-  const inputRef = useRef(null);
-  const resultRef = useRef(null);
-  const [result, setResult] = useState(0);
-
-  function plus(e) {
-    e.preventDefault();
-    setResult((result) => result + Number(inputRef.current.value));
-  }
-
-  function minus(e) {
-    // Add the code for the minus function
-    e.preventDefault();
-    setResult((result) => result - Number(inputRef.current.value));
-  }
-
-  function times(e) {
-    // Add the code for the plus function
-    e.preventDefault();
-    setResult((result) => result * Number(inputRef.current.value));
-  }
-
-  function divide(e) {
-    // Add the code for the divide function
-    e.preventDefault();
-    setResult((result) => result / Number(inputRef.current.value));
-  }
-
-  function resetInput(e) {
-    // Add the code for the resetInput function
-    e.preventDefault();
-    inputRef.current.value = 0;
-  }
-
-  function resetResult(e) {
-    e.preventDefault();
-    setResult((prev) => prev * 0);
+  const [score, setScore] = useState('10')
+  const [comment, setcomment] = useState('')
+  const handelSubmit = (e) => {
+    e.preventDefault()
+    if (score <= 5 && comment.length <= 10) {
+      alert('Please provide  comment')
+      return
+    }
+    console.log('Submitted')
+    setScore('9')
+    setcomment('')
   }
 
   return (
-    <div className="App">
-      <div>
-        <h1>Simplest Working Calculator</h1>
-      </div>
-      <form>
-        <p ref={resultRef}>{result}</p>
-        <input
-          pattern="[0-9]"
-          ref={inputRef}
-          type="number"
-          placeholder="Type a number"
-        />
-        <button onClick={plus}>add</button>
-        <button onClick={minus}>subtract</button>
-        <button onClick={times}>multiply</button>
-        <button onClick={divide}>divide</button>
-        <button onClick={resetInput}>reset Input</button>
-        <button onClick={resetResult}>reset Result</button>
+    <div className='App' style={{ backgroundColor: '#333', color: '#fff' }}>
+      <form onSubmit={handelSubmit}>
+        <fieldset>
+          <h2>FeedBack form</h2>
+          <div>
+            <label>Score: {score} ⭐</label> <br></br>
+            <input
+              type='range'
+              min='0'
+              max='10'
+              value={score}
+              onChange={(e) => setScore(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            <label>comment: </label>
+            <textarea
+              value={comment}
+              onChange={(e) => setcomment(e.target.value)}
+            ></textarea>
+          </div>
+          <button type='submit'>submit</button>
+        </fieldset>
       </form>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
