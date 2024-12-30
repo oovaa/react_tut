@@ -87,15 +87,18 @@ function App() {
             </label>
             <input
               placeholder='Password'
-              // type='password'
+              type='password'
               value={password.value}
               onChange={(e) =>
                 setPassword({ value: e.target.value, isTouched: true })
               }
+              onBlur={
+                () =>
+                  password.value.length < 8 &&
+                  password.isTouched &&
+                  PasswordErrorMessage() // problem
+              }
             />
-          {password.value.length < 8 &&
-            password.isTouched &&
-            PasswordErrorMessage()}
           </div>
           <div className='Field'>
             <label>
