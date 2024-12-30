@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './App.css'
 
 const PasswordErrorMessage = () => {
   return (
@@ -92,10 +93,10 @@ function App() {
                 setPassword({ value: e.target.value, isTouched: true })
               }
             />
-          </div>
           {password.value.length < 8 &&
             password.isTouched &&
             PasswordErrorMessage()}
+          </div>
           <div className='Field'>
             <label>
               Role <sup>*</sup>
